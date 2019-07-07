@@ -74,36 +74,37 @@ class ImageGenerator():
     print("Total time: {:.1f}".format(end-start))
 
 
-# Content layer where will pull our feature maps
-content_layers = ['block5_conv2']
+if __name__ == "__main__":
+  # Content layer where will pull our feature maps
+  content_layers = ['block5_conv2']
 
-# Style layer we are interested in
-style_layers = ['block1_conv1',
-                'block2_conv1',
-                'block3_conv1',
-                'block4_conv1',
-		 'block5_conv1'
-               ]
+  # Style layer we are interested in
+  style_layers = ['block1_conv1',
+                  'block2_conv1',
+                  'block3_conv1',
+                  'block4_conv1',
+           'block5_conv1'
+                 ]
 
-tf.enable_eager_execution()
+  tf.enable_eager_execution()
 
-extractor = StyleContentModel(style_layers, content_layers)
+  extractor = StyleContentModel(style_layers, content_layers)
 
-content_dir = 'images/turtle.jpg'
-style_dir = 'images/wave.jpg'
-save_dir = 'images/wave_turtle.jpg'
+  content_dir = 'images/turtle.jpg'
+  style_dir = 'images/wave.jpg'
+  save_dir = 'images/wave_turtle.jpg'
 
-content_image = load_img(content_dir)
-style_image = load_img(style_dir)
+  content_image = load_img(content_dir)
+  style_image = load_img(style_dir)
 
-plt.subplot(1, 2, 1)
-imshow(content_image, 'Content Image')
+  plt.subplot(1, 2, 1)
+  imshow(content_image, 'Content Image')
 
-plt.subplot(1, 2, 2)
-imshow(style_image, 'Style Image')
+  plt.subplot(1, 2, 2)
+  imshow(style_image, 'Style Image')
 
-plt.show()
+  plt.show()
 
-gen = ImageGenerator(content_image, style_image, 1e-2,1e4, extractor)
-gen.train(10, 0.02, save_dir)
+  gen = ImageGenerator(content_image, style_image, 1e-2,1e4, extractor)
+  gen.train(10, 0.02, save_dir)
 
